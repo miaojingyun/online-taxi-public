@@ -26,6 +26,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		
 		log.info("获取到验证码：【{}】", numberCode);
 		//存入redis
+		
 		System.out.println("存入redis");
 		
 		JSONObject result = new JSONObject();
