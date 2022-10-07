@@ -1,10 +1,13 @@
 package top.lucky.apiPassenger.service;
 
+import top.lucky.common.dto.ResponseResult;
+import top.lucky.common.response.NumberCodeResponse;
+
 /**
  * @author Jane
  * @date 2022/10/7, 18:33
  */
 public interface VerificationCodeService {
 	
-	String generatorCode(String passengerPhone);
+	ResponseResult<NumberCodeResponse> generatorCode(String passengerPhone);
 }

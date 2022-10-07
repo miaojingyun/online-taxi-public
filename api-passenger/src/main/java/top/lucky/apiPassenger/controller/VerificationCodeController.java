@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import top.lucky.apiPassenger.request.VerificationCodeDto;
 import top.lucky.apiPassenger.service.VerificationCodeService;
+import top.lucky.common.dto.ResponseResult;
 
 /**
  * @author Jane
@@ -18,9 +19,8 @@ public class VerificationCodeController {
 	private VerificationCodeService verificationCodeService;
 	
 	@GetMapping("/verification-code")
-	public String verificationCode(@RequestBody VerificationCodeDto verificationCodeDTO) {
+	public ResponseResult verificationCode(@RequestBody VerificationCodeDto verificationCodeDTO) {
 		String passengerPhone = verificationCodeDTO.getPassengerPhone();
-		System.out.println("获取到手机号：" + passengerPhone);
 		return verificationCodeService.generatorCode(passengerPhone);
 	}
 }
