@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: service-verification
+    name: service-verificationCode
   cloud:
     nacos:
       discovery:

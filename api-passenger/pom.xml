@@ -21,6 +21,11 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>top.lucky</groupId>
+            <artifactId>internal-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <!-- add nacos -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
