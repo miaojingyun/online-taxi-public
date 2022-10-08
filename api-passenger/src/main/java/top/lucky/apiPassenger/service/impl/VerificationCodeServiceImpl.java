@@ -38,7 +38,6 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		//存入redis
 		String key = getString(passengerPhone);
 		
-		
 		stringRedisTemplate.opsForValue().set(key, String.valueOf(numberCode), 2, TimeUnit.MINUTES);
 		
 		//通过短信服务商发送到手机
