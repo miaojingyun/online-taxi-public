@@ -10,4 +10,6 @@ import top.lucky.common.response.NumberCodeResponse;
 public interface VerificationCodeService {
 	
 	ResponseResult<NumberCodeResponse> generatorCode(String passengerPhone);
+	
+	ResponseResult verificationCheck(String passengerPhone, String verificationCode);
 }
