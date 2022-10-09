@@ -16,6 +16,7 @@ import top.lucky.common.request.VerificationCodeDto;
 import top.lucky.common.response.NumberCodeResponse;
 import top.lucky.common.response.TokenResponse;
 import top.lucky.common.utils.JwtUtils;
+import top.lucky.common.utils.RedisKeyUtil;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,32 +46,12 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		
 		log.info("获取到验证码：【{}】", numberCode);
 		//存入redis
-		String key = generateKeyByPhone(passengerPhone);
+		String key = RedisKeyUtil.generateKeyByPhone(passengerPhone);
 		
 		stringRedisTemplate.opsForValue().set(key, String.valueOf(numberCode), 2, TimeUnit.MINUTES);
 		
 		//通过短信服务商发送到手机
 		return numberCodeResponse;
-	}
-	
-	/**
-	 * 生成key
-	 * @param passengerPhone
-	 * @return
-	 */
-	private String generateKeyByPhone(String passengerPhone) {
-		String key = verificationCodePrefix + passengerPhone;
-		return key;
-	}
-	
-	/**
-	 * 生成token 的key
-	 * @param passengerPhone
-	 * @return
-	 */
-	private String generateTokenKey(String passengerPhone) {
-		String tokenKey = tokenPrefix  + passengerPhone;
-		return tokenKey;
 	}
 	
 	@Override
@@ -93,7 +74,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		//生成token
 		String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
 		//存入redis
-		String key = generateTokenKey(passengerPhone);
+		String key = RedisKeyUtil.generateTokenKey(passengerPhone,IdentityConstants.PASSENGER_IDENTITY);
 		
 		//token有效期30天
 		stringRedisTemplate.opsForValue().set(key, accessToken, 30, TimeUnit.DAYS);
