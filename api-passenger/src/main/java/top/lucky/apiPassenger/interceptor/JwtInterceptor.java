@@ -1,8 +1,5 @@
 package top.lucky.apiPassenger.interceptor;
 
-import com.auth0.jwt.exceptions.AlgorithmMismatchException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,22 +30,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 		String resultStr = "";
 		String token = request.getHeader("Authorization");
 		//解析token
-		TokenResult tokenResult = null;
-		try {
-			tokenResult = JwtUtils.parseToken(token);
-		} catch (SignatureVerificationException e) {
-			resultStr = "token sign error";
-			result = false;
-		} catch (TokenExpiredException e) {
-			resultStr = "token time out";
-			result = false;
-		} catch (AlgorithmMismatchException e) {
-			resultStr = "token AlgorithmMismatchException";
-			result = false;
-		} catch (Exception e) {
-			resultStr = "token invalid";
-			result = false;
-		}
+		TokenResult tokenResult = JwtUtils.checkToken(token);
 		
 		if (tokenResult == null) {
 			resultStr = "token invalid";
@@ -61,15 +43,9 @@ public class JwtInterceptor implements HandlerInterceptor {
 			String tokenKey = RedisKeyUtil.generateTokenKey(phone, identity, TokenConstants.REFRESH_TOKEN_TYPE);
 			//从redis取出token
 			String redisToken = stringRedisTemplate.opsForValue().get(tokenKey);
-			if (StringUtils.isBlank(redisToken)) {
+			if ((StringUtils.isBlank(redisToken))||!token.equals(redisToken)) {
 				resultStr = "token invalid";
 				result = false;
-			} else {
-				//token不正确
-				if (!token.equals(redisToken)) {
-					resultStr = "token invalid";
-					result = false;
-				}
 			}
 		}
 		if (!result) {
