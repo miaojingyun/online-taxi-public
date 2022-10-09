@@ -73,13 +73,17 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		
 		//生成token
 		String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+		String refreshToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.REFRESH_TOKEN_TYPE);
 		//存入redis
-		String key = RedisKeyUtil.generateTokenKey(passengerPhone,IdentityConstants.PASSENGER_IDENTITY);
+		String accessTokenKey = RedisKeyUtil.generateTokenKey(passengerPhone,IdentityConstants.PASSENGER_IDENTITY,TokenConstants.ACCESS_TOKEN_TYPE);
+		String accessRefreshTokenKey = RedisKeyUtil.generateTokenKey(passengerPhone,IdentityConstants.PASSENGER_IDENTITY,TokenConstants.REFRESH_TOKEN_TYPE);
 		
 		//token有效期30天
-		stringRedisTemplate.opsForValue().set(key, accessToken, 30, TimeUnit.DAYS);
+		stringRedisTemplate.opsForValue().set(accessTokenKey, accessToken, 30, TimeUnit.DAYS);
+		stringRedisTemplate.opsForValue().set(accessRefreshTokenKey, refreshToken, 31, TimeUnit.DAYS);
 		TokenResponse response = new TokenResponse();
 		response.setAccessToken(accessToken);
+		response.setRefreshToken(refreshToken);
 		return ResponseResult.success(response);
 	}
 }

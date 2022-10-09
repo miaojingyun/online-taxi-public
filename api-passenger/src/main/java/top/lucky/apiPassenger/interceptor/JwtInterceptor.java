@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
+import top.lucky.common.constant.TokenConstants;
 import top.lucky.common.dto.ResponseResult;
 import top.lucky.common.dto.TokenResult;
 import top.lucky.common.utils.JwtUtils;
@@ -57,7 +58,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 			String phone = tokenResult.getPhone();
 			String identity = tokenResult.getIdentity();
 			
-			String tokenKey = RedisKeyUtil.generateTokenKey(phone,identity);
+			String tokenKey = RedisKeyUtil.generateTokenKey(phone, identity, TokenConstants.REFRESH_TOKEN_TYPE);
 			//从redis取出token
 			String redisToken = stringRedisTemplate.opsForValue().get(tokenKey);
 			if (StringUtils.isBlank(redisToken)) {
