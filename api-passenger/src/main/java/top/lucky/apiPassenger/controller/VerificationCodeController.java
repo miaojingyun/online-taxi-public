@@ -2,7 +2,7 @@ package top.lucky.apiPassenger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import top.lucky.apiPassenger.request.VerificationCodeDto;
+import top.lucky.common.request.VerificationCodeDto;
 import top.lucky.apiPassenger.service.VerificationCodeService;
 import top.lucky.common.dto.ResponseResult;
 

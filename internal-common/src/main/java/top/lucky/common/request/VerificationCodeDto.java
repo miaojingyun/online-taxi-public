@@ -1,4 +1,4 @@
-package top.lucky.apiPassenger.request;
+package top.lucky.common.request;
 
 import lombok.Data;
 
