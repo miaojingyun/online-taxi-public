@@ -9,6 +9,7 @@ import top.lucky.servicePassengerUser.dto.PassengerUser;
 import top.lucky.servicePassengerUser.mapper.PassengerUserMapper;
 import top.lucky.servicePassengerUser.service.UserService;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,15 @@ public class UserServiceImpl implements UserService {
 		map.put("passenger_phone", passengerPhone);
 		List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
 		if (CollectionUtils.isEmpty(passengerUsers)) {
-			log.error("空{}",passengerPhone);
+			PassengerUser passengerUser = new PassengerUser();
+			passengerUser.setPassengerGender((byte) 0);
+			passengerUser.setPassengerName("lucky");
+			passengerUser.setPassengerPhone(passengerPhone);
+			passengerUser.setState((byte) 0);
+			LocalDateTime now = LocalDateTime.now();
+			passengerUser.setGmtCreate(now);
+			passengerUser.setGmtModified(now);
+			passengerUserMapper.insert(passengerUser);
 		}
 		return ResponseResult.success();
 	}
