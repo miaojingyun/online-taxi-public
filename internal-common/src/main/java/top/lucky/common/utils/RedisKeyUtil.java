@@ -9,7 +9,6 @@ public class RedisKeyUtil {
 	private static String tokenPrefix = "token-";
 	
 	
-	
 	/**
 	 * 生成key
 	 * @param passengerPhone
@@ -31,7 +30,7 @@ public class RedisKeyUtil {
 	 * @param identity
 	 * @return
 	 */
-	public static String generateTokenKey(String phone , String identity,String tokenType){
-		return tokenPrefix + phone + "-" + identity;
+	public static String generateTokenKey(String phone, String identity, String tokenType) {
+		return tokenPrefix + phone + "-" + identity + "-" + tokenType;
 	}
 }
