@@ -8,11 +8,14 @@ import org.springframework.stereotype.Service;
 import top.lucky.apiPassenger.remote.ServicePassengerUserClient;
 import top.lucky.apiPassenger.remote.ServiceVerificationCodeClient;
 import top.lucky.apiPassenger.service.VerificationCodeService;
+import top.lucky.common.constant.IdentityConstants;
+import top.lucky.common.constant.TokenConstants;
 import top.lucky.common.dto.ResponseResult;
 import top.lucky.common.enums.CommonStatusEnum;
 import top.lucky.common.request.VerificationCodeDto;
 import top.lucky.common.response.NumberCodeResponse;
 import top.lucky.common.response.TokenResponse;
+import top.lucky.common.utils.JwtUtils;
 
 import java.util.concurrent.TimeUnit;
 
@@ -77,7 +80,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		servicePassengerUserClient.loginOrReg(verificationCodeDto);
 		
 		TokenResponse response = new TokenResponse();
-		response.setAccessToken("token");
+		response.setAccessToken(JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE));
 		return ResponseResult.success(response);
 	}
 }
