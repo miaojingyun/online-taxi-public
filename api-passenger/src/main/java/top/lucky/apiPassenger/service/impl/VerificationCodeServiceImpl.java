@@ -5,10 +5,12 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
+import top.lucky.apiPassenger.remote.ServicePassengerUserClient;
 import top.lucky.apiPassenger.remote.ServiceVerificationCodeClient;
 import top.lucky.apiPassenger.service.VerificationCodeService;
 import top.lucky.common.dto.ResponseResult;
 import top.lucky.common.enums.CommonStatusEnum;
+import top.lucky.common.request.VerificationCodeDto;
 import top.lucky.common.response.NumberCodeResponse;
 import top.lucky.common.response.TokenResponse;
 
@@ -26,6 +28,9 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 	private StringRedisTemplate stringRedisTemplate;
 	@Autowired
 	private ServiceVerificationCodeClient serviceVerificationCodeClient;
+	
+	@Autowired
+	private ServicePassengerUserClient servicePassengerUserClient;
 	
 	private String verificationCodePrefix = "passenger-verification-code-";
 	
@@ -66,6 +71,11 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 			return ResponseResult.fail(CommonStatusEnum.VERIFICATION_CODE_ERROR.getCode(),  CommonStatusEnum.VERIFICATION_CODE_ERROR.getValue());
 			
 		}
+		
+		VerificationCodeDto verificationCodeDto = new VerificationCodeDto();
+		verificationCodeDto.setPassengerPhone(passengerPhone);
+		servicePassengerUserClient.loginOrReg(verificationCodeDto);
+		
 		TokenResponse response = new TokenResponse();
 		response.setAccessToken("token");
 		return ResponseResult.success(response);
