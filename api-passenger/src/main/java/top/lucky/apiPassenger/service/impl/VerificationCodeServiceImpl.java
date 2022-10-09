@@ -36,6 +36,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 	private ServicePassengerUserClient servicePassengerUserClient;
 	
 	private String verificationCodePrefix = "passenger-verification-code-";
+	private String tokenPrefix = "token-";
 	
 	@Override
 	public ResponseResult generatorCode(String passengerPhone) {
@@ -44,7 +45,7 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		
 		log.info("获取到验证码：【{}】", numberCode);
 		//存入redis
-		String key = getString(passengerPhone);
+		String key = generateKeyByPhone(passengerPhone);
 		
 		stringRedisTemplate.opsForValue().set(key, String.valueOf(numberCode), 2, TimeUnit.MINUTES);
 		
@@ -57,9 +58,19 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 	 * @param passengerPhone
 	 * @return
 	 */
-	private String getString(String passengerPhone) {
+	private String generateKeyByPhone(String passengerPhone) {
 		String key = verificationCodePrefix + passengerPhone;
 		return key;
+	}
+	
+	/**
+	 * 生成token 的key
+	 * @param passengerPhone
+	 * @return
+	 */
+	private String generateTokenKey(String passengerPhone) {
+		String tokenKey = tokenPrefix  + passengerPhone;
+		return tokenKey;
 	}
 	
 	@Override
@@ -79,8 +90,15 @@ public class VerificationCodeServiceImpl implements VerificationCodeService {
 		verificationCodeDto.setPassengerPhone(passengerPhone);
 		servicePassengerUserClient.loginOrReg(verificationCodeDto);
 		
+		//生成token
+		String accessToken = JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE);
+		//存入redis
+		String key = generateTokenKey(passengerPhone);
+		
+		//token有效期30天
+		stringRedisTemplate.opsForValue().set(key, accessToken, 30, TimeUnit.DAYS);
 		TokenResponse response = new TokenResponse();
-		response.setAccessToken(JwtUtils.generatorToken(passengerPhone, IdentityConstants.PASSENGER_IDENTITY, TokenConstants.ACCESS_TOKEN_TYPE));
+		response.setAccessToken(accessToken);
 		return ResponseResult.success(response);
 	}
 }
