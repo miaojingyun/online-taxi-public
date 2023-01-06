@@ -20,6 +20,9 @@ public class NumberCodeController {
 	public ResponseResult numberCode(@PathVariable("size") int size) {
 		log.info("验证码长度：【{}】", size);
 		String numberCode = RandomUtil.getDigitsStr(size);
+		if (numberCode.startsWith("0")) {
+			numberCode = RandomUtil.getDigitsStr(size);
+		}
 		log.info("验证码：【{}】", numberCode);
 		NumberCodeResponse response = new NumberCodeResponse();
 		response.setNumberCode(Integer.valueOf(numberCode));

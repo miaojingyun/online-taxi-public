@@ -1,4 +1,4 @@
-package top.lucky.servicePassengerUser.dto;
+package top.lucky.common.dto;
 
 import lombok.Data;
 

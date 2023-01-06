@@ -2,7 +2,7 @@ package top.lucky.servicePassengerUser.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.springframework.stereotype.Repository;
-import top.lucky.servicePassengerUser.dto.PassengerUser;
+import top.lucky.common.dto.PassengerUser;
 
 /**
  * @author Jane

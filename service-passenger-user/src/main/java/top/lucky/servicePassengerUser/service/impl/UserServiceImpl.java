@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.lucky.common.dto.PassengerUser;
 import top.lucky.common.dto.ResponseResult;
-import top.lucky.servicePassengerUser.dto.PassengerUser;
 import top.lucky.servicePassengerUser.mapper.PassengerUserMapper;
 import top.lucky.servicePassengerUser.service.UserService;
 
