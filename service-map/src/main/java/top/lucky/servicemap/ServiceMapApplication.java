@@ -1,4 +1,4 @@
-package top.lucky.serviceprice;
+package top.lucky.servicemap;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ServicePriceApplication {
-	
+public class ServiceMapApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ServicePriceApplication.class, args);
+		SpringApplication.run(ServiceMapApplication.class, args);
 	}
-	
 }
