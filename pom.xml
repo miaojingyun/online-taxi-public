@@ -11,7 +11,7 @@
         <module>service-driver-user</module>
         <module>service-passenger-user</module>
         <module>service-price</module>
-        <module>service-verificationcode</module>
+        <module>service-verificationCode</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

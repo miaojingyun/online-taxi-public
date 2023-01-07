@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-verificationcode</artifactId>
+    <artifactId>service-verificationCode</artifactId>
     <packaging>jar</packaging>
 
     <name>service-verificationcode</name>
