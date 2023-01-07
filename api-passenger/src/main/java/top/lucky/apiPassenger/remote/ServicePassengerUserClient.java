@@ -1,6 +1,8 @@
 package top.lucky.apiPassenger.remote;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.lucky.common.dto.ResponseResult;
@@ -15,4 +17,7 @@ public interface ServicePassengerUserClient {
 	
 	@PostMapping("user")
 	ResponseResult loginOrReg(@RequestBody VerificationCodeDto verificationCodeDto);
+	
+	@GetMapping("user/{passengerPhone}")
+	ResponseResult getUserByPhone(@PathVariable("passengerPhone") String passengerPhone);
 }

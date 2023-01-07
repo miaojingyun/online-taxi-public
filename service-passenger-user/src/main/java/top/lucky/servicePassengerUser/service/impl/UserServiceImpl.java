@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.lucky.common.dto.PassengerUser;
 import top.lucky.common.dto.ResponseResult;
+import top.lucky.common.enums.CommonStatusEnum;
 import top.lucky.servicePassengerUser.mapper.PassengerUserMapper;
 import top.lucky.servicePassengerUser.service.UserService;
 
@@ -43,5 +44,18 @@ public class UserServiceImpl implements UserService {
 			passengerUserMapper.insert(passengerUser);
 		}
 		return ResponseResult.success();
+	}
+	
+	@Override
+	public ResponseResult getUserByPhone(String passengerPhone) {
+		//根据手机号查询，判断用户是否存在
+		Map<String, Object> map = new HashMap<>();
+		map.put("passenger_phone", passengerPhone);
+		List<PassengerUser> passengerUsers = passengerUserMapper.selectByMap(map);
+		if (CollectionUtils.isEmpty(passengerUsers)) {
+			return ResponseResult.fail(CommonStatusEnum.USER_NOT_EXISTS.getCode(), CommonStatusEnum.USER_NOT_EXISTS.getValue());
+		}
+		PassengerUser passengerUser = passengerUsers.get(0);
+		return ResponseResult.success(passengerUser);
 	}
 }
