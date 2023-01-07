@@ -23,3 +23,8 @@ logging:
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# 自定义的 key：value
+amap:
+  key: 6afdbedda588fa90039387066cc712b1
+  #服务id，服务名称：测试2
+  sid: 809598
