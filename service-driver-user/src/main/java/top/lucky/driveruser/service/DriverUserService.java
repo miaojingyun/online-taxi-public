@@ -5,4 +5,6 @@ import top.lucky.common.dto.ResponseResult;
 
 public interface DriverUserService {
 	ResponseResult addUser(DriverUser driverUser);
+	
+	ResponseResult updateDriverUser(DriverUser driverUser);
 }
